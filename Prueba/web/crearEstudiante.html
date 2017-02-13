@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Crear Estudiante</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <img src="sombra.jpg" alt="sombrita" height="72" width="72" hspace="100"><br><br>
+        <form action="Servlet" name="formulario" method="get">
+            Nombre: <input name="nombre" type="text"><br>
+            Apellido: <input name="apellido" type="text"><br>
+            Promedio: <input name="promedio" type="number" step="0.1" min="0" max="5"><br>
+            <table>
+                <tr>
+                    <td>sexo: </td>
+                </tr>
+                <tr>
+                    <td><input name="genero" type="radio" value="masculino">Masculino<br></td>
+                    <td><input name="genero" type="radio" value="femenino">Femenino<br></td>
+                    <td><input name="genero" type="radio" value="otro">Otro<br><br></td>
+                </tr>
+            </table>
+            <!--Sexo:<br> 
+                <input name="genero" type="radio" value="masculino">Masculino<br>
+                <input name="genero" type="radio" value="femenino">Femenino<br>
+                <input name="genero" type="radio" value="otro">Otro<br><br>-->
+            <input name="enviar" type="submit">
+        </form>
+    </body>
+</html>
