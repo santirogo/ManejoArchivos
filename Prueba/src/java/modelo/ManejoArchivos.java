@@ -17,16 +17,20 @@ public class ManejoArchivos {
     RandomAccessFile raf;
     RandomAccessFile rafTree;
     DataFactory df;
+    int cont;
 
     public ManejoArchivos() throws FileNotFoundException, IOException {
         this.raf = new RandomAccessFile("prueba.txt", "rw"); //Maneja el archivo profesor.txt
         this.raf.seek(0);
-        for (int i = 0; i < 280; i = i + 2) {
+        this.raf.writeChar('@');
+        for (int i = 2; i < 280; i = i + 2) {
             this.raf.writeChar('\u0000');
+            //this.raf.writeInt(-1);
             //this.raf.skipBytes(280);
         }
         this.rafTree = new RandomAccessFile("prueba.txt", "rw");//Maneja el árbol en el archivo profesor.txt
         this.df = new DataFactory();
+        this.cont = 1;
     }
 
     public void newFile(int num) throws FileNotFoundException, IOException { //Función inservible por el momento
@@ -95,7 +99,7 @@ public class ManejoArchivos {
         raf.writeInt(ext);//Mete la extensión en el archivo
 
         //agregarNodoArbol(0, id, posición); //Agrego el nodo en el árbol
-        arbol(0, id, posición, 0);
+        arbol(id, posición);
     }
 
     public int leerEntero(long posByte) throws IOException {
@@ -173,56 +177,62 @@ public class ManejoArchivos {
         }
     }
 
-    public void arbol(long raizP, int id, long pos, int cont) throws FileNotFoundException, IOException {
-        rafTree.seek(raizP);
+    public void arbol(int id, long pos) throws FileNotFoundException, IOException {
+        rafTree.seek(0);
         boolean flag = false;
         
-        
-        
-        if (rafTree.length() == 0) {
-            this.rafTree.seek(0);
-            this.rafTree.writeInt(id);
-            this.rafTree.writeLong(-1);
-            this.rafTree.writeLong(-1);
-            this.rafTree.writeLong(pos);
-            System.out.println("se puso el primero");
-
-        } else {
-            int actual = this.rafTree.readInt();
-            if (actual > id) {
-                this.rafTree.seek(12);
-                long derPos = this.rafTree.readLong();
-                if (derPos == -1) {
-                    this.rafTree.seek(this.rafTree.getFilePointer() - 8);
-                    this.rafTree.writeLong(cont * 28);
-                    this.rafTree.seek(cont * 28);
-                    this.rafTree.writeInt(id); //Revisar
-                    this.rafTree.writeFloat(-1);
-                    this.rafTree.writeFloat(-1);
-                    this.rafTree.writeLong(pos);
-                    cont++;
-                    System.out.println("se añadio 1");
-                } else {
-                    arbol(derPos, id, pos, cont);
-                }
-            }else{
-                this.rafTree.seek(4);
-                long izqPos = this.rafTree.readLong();
-                if (izqPos == -1) {
-                    this.rafTree.seek(this.rafTree.getFilePointer() - 8);
-                    this.rafTree.writeLong(cont * 28);
-                    this.rafTree.seek(cont * 28);
-                    this.rafTree.writeInt(id); //Revisar
-                    this.rafTree.writeFloat(-1);
-                    this.rafTree.writeFloat(-1);
-                    this.rafTree.writeLong(pos);
-                    cont++;
-                    System.out.println("se añadio 2");
-                } else {
-                    arbol(izqPos, id, pos, cont);
+        while (!flag) {
+            long posicion = this.rafTree.getFilePointer();
+            if (rafTree.readChar() == '@') {
+                this.rafTree.seek(0);
+                this.rafTree.writeInt(id);
+                this.rafTree.writeLong(-1);
+                this.rafTree.writeLong(-1);
+                this.rafTree.writeLong(pos);
+                System.out.println("se puso el primero");
+                flag = true;
+            } else {
+                int actual = this.rafTree.readInt();
+                if (actual > id) {
+                    this.rafTree.seek(12);
+                    long derPos = this.rafTree.readLong();
+                    if (derPos == -1) {
+                        this.rafTree.seek(this.rafTree.getFilePointer() - 8);
+                        this.rafTree.writeLong(cont * 28);
+                        this.rafTree.seek(cont * 28);
+                        this.rafTree.writeInt(id); //Revisar
+                        this.rafTree.writeFloat(-1);
+                        this.rafTree.writeFloat(-1);
+                        this.rafTree.writeLong(pos);
+                        flag = true;
+                        cont++;
+                        System.out.println("se añadio 1");
+                    } else {
+                        //arbol(derPos, id, pos, cont);
+                        this.rafTree.seek(derPos);
+                    }
+                }else{
+                    this.rafTree.seek(4);
+                    long izqPos = this.rafTree.readLong();
+                    if (izqPos == -1) {
+                        this.rafTree.seek(this.rafTree.getFilePointer() - 8);
+                        this.rafTree.writeLong(cont * 28);
+                        this.rafTree.seek(cont * 28);
+                        this.rafTree.writeInt(id); //Revisar
+                        this.rafTree.writeFloat(-1);
+                        this.rafTree.writeFloat(-1);
+                        this.rafTree.writeLong(pos);
+                        flag = true;
+                        cont++;
+                        System.out.println("se añadio 2");
+                    } else {
+                        //arbol(izqPos, id, pos, cont);
+                        this.rafTree.seek(izqPos);
+                    }
                 }
             }
         }
+        
     }
     
     public void buscar(int id) throws IOException{
