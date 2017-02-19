@@ -5,15 +5,10 @@
  */
 package modelo;
 
-import java.io.IOException;
-
 /**
  *
  * @author black
  */
-public class Main {
-    public static void main(String[] args) throws IOException {
-        ManejoArchivos ma = ManejoArchivos.getManejoArchivos();
-        ma.buscar(1);
-    }
+public class Profesor {
+    
 }

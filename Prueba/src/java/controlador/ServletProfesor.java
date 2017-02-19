@@ -42,7 +42,7 @@ public class ServletProfesor extends HttpServlet {
             bd = new BaseDatosProfesores();
             bd.agregarProfesor(id, name, lastname, ext);
             
-            w = new ManejoArchivos();
+            w = ManejoArchivos.getManejoArchivos();
             w.crearArchivoProfesor(id, name, lastname, ext);
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
