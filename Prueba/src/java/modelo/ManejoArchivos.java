@@ -91,6 +91,7 @@ public class ManejoArchivos {
         boolean flag = false;
         
         while (!flag) {
+            System.out.println("id: "+id);
             long posicion = this.rafTree.getFilePointer();
             System.out.println(posicion);
             if (rafTree.readChar() == '@') {
@@ -103,9 +104,12 @@ public class ManejoArchivos {
                 flag = true;
             } else {
                 int actual = this.rafTree.readInt();
-                this.rafTree.seek(this.rafTree.getFilePointer() - 4);
-                if (actual > id) {
-                    System.out.println("Entró primer condicional");
+                int pruebaActual = ((actual-131071)/65536)+1;
+                System.out.println("ID comparar "+pruebaActual);
+                System.out.println("ID actual: "+actual);
+                this.rafTree.seek(posicion);
+                if (pruebaActual < id) {
+                    System.out.println("Entró primer condicional (El número metido es mayor que el que estaba)");
                     this.rafTree.seek(posicion + 12);
                     long derPos = this.rafTree.readLong();
                     this.rafTree.seek(posicion + 12);
@@ -151,6 +155,8 @@ public class ManejoArchivos {
     }
     
     public void buscar(int id) throws IOException{
+        //int idReal = (65536*(id-1))+131071;
+        //System.out.println("idR: "+idReal);
         for (int i = 0; i < 280; i = i + 28) {
             System.out.println("asdfadfvg");
             this.rafTree.seek(i);
