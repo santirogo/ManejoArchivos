@@ -23,7 +23,7 @@ public class ManejoArchivos {
     private static ManejoArchivos manejoArchivos;
 
     private ManejoArchivos() throws FileNotFoundException, IOException {
-        this.raf = new RandomAccessFile("prueebita1.txt", "rw"); //Maneja el archivo profesor.txt
+        this.raf = new RandomAccessFile("prueeba1.txt", "rw"); //Maneja el archivo profesor.txt
         this.raf.seek(8);
 
         try {
@@ -42,7 +42,7 @@ public class ManejoArchivos {
             }
         }
 
-        this.rafTree = new RandomAccessFile("prueebita1.txt", "rw");//Maneja el árbol en el archivo profesor.txt
+        this.rafTree = new RandomAccessFile("prueeba1.txt", "rw");//Maneja el árbol en el archivo profesor.txt
         this.df = new DataFactory();
     }
     
@@ -230,5 +230,39 @@ public class ManejoArchivos {
                 
             }
         }
+    }
+    
+    public void eliminar(int id) throws IOException{
+        for (int i = 12; i < 292; i+=28) {
+            this.rafTree.seek(i);
+            if (id == this.rafTree.readInt()) {
+                this.rafTree.skipBytes(16);
+                this.rafTree.writeLong(-1);
+            }
+        }
+    }
+    
+    public int[] todosID() throws IOException{
+        int cont = 0;
+        int contador = 0;
+        
+        for (int i = 12; i < this.finalPosA; i += 28) {
+
+            this.rafTree.seek(i);
+            int x = this.rafTree.readInt();
+            if (x > 0) {
+                cont++;
+            }
+        }
+        
+        int[] ids = new int[cont];
+        
+        for (int i = 12; i < this.finalPosA; i+= 28) {
+            this.rafTree.seek(i);
+            int x = this.rafTree.readInt();
+            ids [contador] = x;
+        }
+        
+        return ids;
     }
 }

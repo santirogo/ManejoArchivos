@@ -56,6 +56,14 @@
         <servlet-name>ServletIns</servlet-name>
         <servlet-class>controlador.ServletIns</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletPunto4</servlet-name>
+        <servlet-class>controlador.ServletPunto4</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletEliminar</servlet-name>
+        <servlet-class>controlador.ServletEliminar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
@@ -111,6 +119,14 @@
     <servlet-mapping>
         <servlet-name>ServletIns</servlet-name>
         <url-pattern>/ServletIns</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPunto4</servlet-name>
+        <url-pattern>/ServletPunto4</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletEliminar</servlet-name>
+        <url-pattern>/ServletEliminar</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

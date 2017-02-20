@@ -23,7 +23,7 @@ public class ManejoArchivosInscripciones {
     private static ManejoArchivosInscripciones manejoArchivosInscripciones;
     
     private ManejoArchivosInscripciones() throws FileNotFoundException, IOException{
-        this.raf = new RandomAccessFile("prueebita4.txt", "rw"); //Maneja el archivo profesor.txt
+        this.raf = new RandomAccessFile("prueeba4.txt", "rw"); //Maneja el archivo profesor.txt
         this.raf.seek(8);
         System.out.println("HOLA " + this.raf.getFilePointer());
         
@@ -43,7 +43,7 @@ public class ManejoArchivosInscripciones {
             }
         }
         
-        this.rafTree = new RandomAccessFile("prueebita4.txt", "rw");//Maneja el árbol en el archivo profesor.txt
+        this.rafTree = new RandomAccessFile("prueeba4.txt", "rw");//Maneja el árbol en el archivo profesor.txt
     }
     
     public static ManejoArchivosInscripciones getManejoArchivosInscripciones() throws IOException{
