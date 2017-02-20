@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -18,18 +19,31 @@ public class ManejoArchivosInscripciones {
     private RandomAccessFile rafTree;
     private int cont;
     private int pk;
+    private long finalPosT;
     private static ManejoArchivosInscripciones manejoArchivosInscripciones;
     
     private ManejoArchivosInscripciones() throws FileNotFoundException, IOException{
-        this.raf = new RandomAccessFile("prueba3", "rw");
-        this.raf.seek(0);
-        this.rafTree = new RandomAccessFile("prueba3", "rw");
-        this.raf.writeChar('@');
-        for (int i = 2; i < 360; i = i + 2) {
-            this.raf.writeChar('\u0000');
+        this.raf = new RandomAccessFile("prueebita4.txt", "rw"); //Maneja el archivo profesor.txt
+        this.raf.seek(8);
+        System.out.println("HOLA " + this.raf.getFilePointer());
+        
+        try {
+            cont = this.raf.readInt();
+            System.out.println("CONTADOR ES 0");
+            finalPosT = 12;
+            cont = 1;
+        } catch (EOFException e) {
+            System.out.println("NUEVO ARCHIVO");
+            finalPosT = 12;
+            cont = 1;
+            this.raf.seek(12);
+            this.raf.writeChar('@');
+            for (int i = 14; i < 372; i = i + 2) {
+                this.raf.writeChar('\u0000');
+            }
         }
-        this.cont = 1;
-        this.pk = 1;
+        
+        this.rafTree = new RandomAccessFile("prueebita4.txt", "rw");//Maneja el árbol en el archivo profesor.txt
     }
     
     public static ManejoArchivosInscripciones getManejoArchivosInscripciones() throws IOException{
@@ -39,7 +53,7 @@ public class ManejoArchivosInscripciones {
         return manejoArchivosInscripciones;
     }
     
-    public void crearArchivoInscripciones(int idEst, int idCurso, String fechaIns, String fechaFin, double nota, long posIdEst, long posIdCurso) throws IOException{
+    public void crearArchivoInscripciones(int idEst, int idCurso, String fechaIns, String fechaFin, double nota) throws IOException{
         this.raf.seek(this.raf.length());//Salta en el archivo hasta la última posición
         long posición = this.raf.getFilePointer();
         this.raf.writeInt(pk);//PK artificial
@@ -87,69 +101,90 @@ public class ManejoArchivosInscripciones {
         return this.raf.length(); //Retorna el tamaño del archivo
     }
 
-    public void arbol(int idEst, int idCurso, long posIdEst) throws FileNotFoundException, IOException {
-        rafTree.seek(0);
+    public void arbol(int idEst, int idCurso, long pos) throws FileNotFoundException, IOException {
+        rafTree.seek(12);
         boolean flag = false;
-        
+
         while (!flag) {
-            System.out.println("id: "+idEst);
+            System.out.println("id: " + idEst);
             long posicion = this.rafTree.getFilePointer();
             System.out.println(posicion);
-            if (rafTree.readChar() == '@') {
-                this.rafTree.seek(0);
+            if (finalPosT == 12) {
+                System.out.println("PRIMER IF");
+                System.out.println(finalPosT);
+                this.rafTree.seek(finalPosT);
                 this.rafTree.writeInt(pk);
                 this.rafTree.writeInt(idEst);
                 this.rafTree.writeInt(idCurso);
                 this.rafTree.writeLong(-1);
                 this.rafTree.writeLong(-1);
-                this.rafTree.writeLong(posIdEst);
+                this.rafTree.writeLong(pos);
                 System.out.println("se puso el primero");
+                finalPosT = this.rafTree.getFilePointer();
+                System.out.println("POSICION FINAL " + finalPosT);
+                this.rafTree.seek(0);
+                this.rafTree.writeLong(finalPosT);
+                this.rafTree.writeInt(cont);
+                pk++;
                 flag = true;
             } else {
+                System.out.println("ELSE PRIMER IF");
                 int actual = this.rafTree.readInt();
-                int pruebaActual = ((actual-131071)/65536)+1;
-                System.out.println("ID comparar "+pruebaActual);
-                System.out.println("ID actual: "+actual);
+//                int pruebaActual = ((actual-131071)/65536)+1;
+                System.out.println("ID comparar " + pk);
+                System.out.println("ID actual: " + actual);
                 this.rafTree.seek(posicion);
-                if (pruebaActual < idEst) {
+                if (actual < pk) {
                     System.out.println("Entró primer condicional (El número metido es mayor que el que estaba)");
                     this.rafTree.seek(posicion + 20);
                     long derPos = this.rafTree.readLong();
                     this.rafTree.seek(posicion + 20);
-                    System.out.println("cont = "+cont);
+                    System.out.println("cont = " + cont);
                     if (derPos == -1) {
-                        this.rafTree.writeLong(cont * 36);
-                        this.rafTree.seek(cont * 36);
-                        this.rafTree.writeInt(pk);
-                        this.rafTree.writeInt(idEst);
-                        this.rafTree.writeInt(idCurso);
+                        this.rafTree.writeLong(finalPosT);
+                        this.rafTree.seek(finalPosT);
+                        this.rafTree.writeInt(pk); 
+                        this.rafTree.writeInt(idEst); 
+                        this.rafTree.writeInt(idCurso); 
                         this.rafTree.writeLong(-1);
                         this.rafTree.writeLong(-1);
-                        this.rafTree.writeLong(posIdEst);
+                        this.rafTree.writeLong(pos);
                         flag = true;
+                        pk++;
                         cont++;
+                        finalPosT = this.rafTree.getFilePointer();
+                        System.out.println("POSICION FINAL " + finalPosT);
+                        this.rafTree.seek(0);
+                        this.rafTree.writeLong(finalPosT);
+                        this.rafTree.writeInt(cont);
                         System.out.println("se añadio 1");
                     } else {
-                        System.out.println("se fue a la pos: "+derPos);
+                        System.out.println("se fue a la pos: " + derPos);
                         //arbol(derPos, id, pos, cont);
                         this.rafTree.seek(derPos);
                     }
-                }else{
+                } else {
                     System.out.println("Entró segundo condicional");
                     this.rafTree.seek(posicion + 12);
                     long izqPos = this.rafTree.readLong();
                     this.rafTree.seek(posicion + 12);
                     if (izqPos == -1) {
-                        this.rafTree.writeLong(cont * 36);
-                        this.rafTree.seek(cont * 36);
+                        this.rafTree.writeLong(finalPosT);
+                        this.rafTree.seek(finalPosT);
                         this.rafTree.writeInt(pk);
                         this.rafTree.writeInt(idEst);
                         this.rafTree.writeInt(idCurso);
                         this.rafTree.writeLong(-1);
                         this.rafTree.writeLong(-1);
-                        this.rafTree.writeLong(posIdEst);
+                        this.rafTree.writeLong(pos);
                         flag = true;
+                        pk++;
                         cont++;
+                        finalPosT = this.rafTree.getFilePointer();
+                        System.out.println("POSICION FINAL " + finalPosT);
+                        this.rafTree.seek(0);
+                        this.rafTree.writeLong(finalPosT);
+                        this.rafTree.writeInt(cont);
                         System.out.println("se añadio 2");
                     } else {
                         //arbol(izqPos, id, pos, cont);
@@ -165,7 +200,7 @@ public class ManejoArchivosInscripciones {
         int tamano = 0;
         int contador = 0;
         
-        for (int i = 0; i < 360; i+=36) {
+        for (int i = 12; i < finalPosT; i+=36) {
             this.rafTree.seek(i+8);
             if (this.rafTree.readInt() == idCurso) {
                 tamano++;
@@ -174,7 +209,7 @@ public class ManejoArchivosInscripciones {
         
         int estudiantes [] = new int[tamano];
         
-        for (int i = 0; i < 360; i+=36) {
+        for (int i = 12; i < finalPosT; i+=36) {
             this.rafTree.seek(i+8);
             if (this.rafTree.readInt() == idCurso) {
                 this.rafTree.seek(i+4);
@@ -184,5 +219,35 @@ public class ManejoArchivosInscripciones {
             }
         }
         return estudiantes;
+    }
+    
+    public int [] buscarEstudiantesBuenos() throws IOException{
+        int tamano = 0;
+        int contador = 0;
+        
+        for (int i = 12; i < finalPosT; i+=36) {
+            this.rafTree.seek(i+28);
+            long posicionMover = this.rafTree.readLong();
+            this.raf.seek(posicionMover+92);
+            if (this.raf.readDouble() > 3.0) {
+                tamano++;
+            }
+        }
+        
+        int buenosEstudiantes [] = new int[tamano];
+        
+        for (int i = 12; i < finalPosT; i+=36) {
+            this.rafTree.seek(i+28);
+            long posicionMover = this.rafTree.readLong();
+            this.raf.seek(posicionMover+92);
+            if (this.raf.readDouble() > 3.0) {
+                System.out.println("puso un estudiante");
+                this.raf.seek(posicionMover+4);
+                buenosEstudiantes[contador] = this.raf.readInt();
+                contador++;
+            }
+        }
+        
+        return buenosEstudiantes;
     }
 }

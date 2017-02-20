@@ -41,7 +41,9 @@ public class ServletPunto2 extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Datos del estudiante 1518</h1>");
+            System.out.println("va a entrar");
             long posEstudiante = this.mae.buscarEstudiante(1518);
+            System.out.println("ya pasó");
             out.println("<table>");
             
             out.println("<tr>");

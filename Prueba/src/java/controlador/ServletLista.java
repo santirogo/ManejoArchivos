@@ -35,7 +35,7 @@ public class ServletLista extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            long cont = 280;
+            long cont = 292;
             ManejoArchivos ma = ManejoArchivos.getManejoArchivos();
 
             out.println("<!DOCTYPE html>");
@@ -54,7 +54,7 @@ public class ServletLista extends HttpServlet {
             out.println("</tr>");
 
             if (ma.getTamanoLista() > 0) {
-                for (int i = 280; i < ma.getTamanoLista(); i = i + 88) {
+                for (int i = 292; i < ma.getTamanoLista(); i = i + 88) {
                     out.println("<tr>");
                     out.println("<td>" + ma.leerEntero(cont) + "</td>");
                     cont += 4;

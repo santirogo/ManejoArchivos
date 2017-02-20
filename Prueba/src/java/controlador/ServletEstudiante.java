@@ -50,9 +50,9 @@ public class ServletEstudiante extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             
-            for (int i = 0; i < bd.getNombresEstudiantes().size(); i++) {
-                out.println("<h1>Se ha agregado a " + name +" "+ bd.getApellidosEstudiantes().get(i) + " " + surname +" con ID "+ id +" y teléfono "+ telefono +"</h1>");
-            }
+           
+            out.println("<h1>Se ha agregado a " + name +" "+  surname +" con ID "+ id +" y teléfono "+ telefono +"</h1>");
+            
             
             out.println("</body>");
             out.println("</html>");

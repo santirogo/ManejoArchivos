@@ -11,13 +11,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.ManejoArchivosCursos;
 
 /**
  *
  * @author ayoro
  */
 public class ServletPunto6 extends HttpServlet {
-
+    ManejoArchivosCursos mac;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,6 +32,7 @@ public class ServletPunto6 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            this.mac = ManejoArchivosCursos.getManejoArchivosCursos();
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -38,7 +40,30 @@ public class ServletPunto6 extends HttpServlet {
             out.println("<title>Servlet ServletPunto6</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ServletPunto6 at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Codigo de los cursos sin profesor</h1>");
+            out.println("<table>");
+            
+            out.println("<tr>");
+            out.println("<td>Codigo</td>");
+            out.println("<td>Nombre</td>");
+            out.println("<td>Duracion</td>");
+            out.println("</tr>");
+            
+            int cursos [] = this.mac.buscarCursos(0);
+            for (int i = 0; i < cursos.length; i++) {
+                long posicionCurso = this.mac.buscarPosicionCursos(cursos[i]);
+                out.println("<tr>");
+                out.println("<td>"+this.mac.leerEntero(posicionCurso)+"</td>");
+                out.print("<td>");
+                char name [] = this.mac.leerChars(posicionCurso+4);
+                for (int j = 0; j < 20; j++) {
+                    out.print(name[j]);
+                }
+                out.println("</td>");
+                out.println("<td>"+this.mac.leerEntero(posicionCurso+44)+"</td>");
+                out.println("</tr>");
+            }
+            out.println("</table>");
             out.println("</body>");
             out.println("</html>");
         }

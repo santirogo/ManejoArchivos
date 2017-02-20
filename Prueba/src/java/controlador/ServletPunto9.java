@@ -11,18 +11,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.ManejoArchivosCursos;
 import modelo.ManejoArchivosEstudiantes;
-import modelo.ManejoArchivosInscripciones;
 
 /**
  *
  * @author ayoro
  */
-public class ServletInscripciones extends HttpServlet {
-    private ManejoArchivosEstudiantes mae;
-    private ManejoArchivosCursos mac;
-    private ManejoArchivosInscripciones mai;
+public class ServletPunto9 extends HttpServlet {
+    ManejoArchivosEstudiantes mae;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,25 +32,50 @@ public class ServletInscripciones extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            this.mac = ManejoArchivosCursos.getManejoArchivosCursos();
             this.mae = ManejoArchivosEstudiantes.getManejoArchivosEstudiantes();
-            this.mai = ManejoArchivosInscripciones.getManejoArchivosInscripciones();
+            long cont = 292;
             /* TODO output your page here. You may use following sample code. */
-            int idEst = Integer.parseInt(request.getParameter("idEst"));
-            int idCurso = Integer.parseInt(request.getParameter("idCurso"));
-            String fechaIns = request.getParameter("fechaIns");
-            String fechaFin = request.getParameter("fechaFin");
-            double nota = Double.parseDouble(request.getParameter("nota"));
-            
-            this.mai.crearArchivoInscripciones(idEst, idCurso, fechaIns, fechaFin, nota);
-            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ServletInscripciones</title>");            
+            out.println("<title>Servlet ServletPunto9</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Se realizó la inscripción correctamente</h1>");
+            out.println("<h1>Listado de los estudiantes</h1>");
+            out.println("<table>");
+            
+            out.println("<tr>");
+            out.println("<td>ID</td>");
+            out.println("<td>Nombre</td>");
+            out.println("<td>Apellido</td>");
+            out.println("<td>Teléfono</td>");
+            out.println("</tr>");
+            if (mae.getTamanoLista() > 0) {
+                for (int i = 292; i < mae.getTamanoLista(); i+=88) {
+                    out.println("<tr>");
+                    out.println("<td>"+this.mae.leerEntero(cont)+"</td>");
+                    cont += 4;
+                    char nombre [] = this.mae.leerChars(cont);
+                    out.print("<td>");
+                    for (int j = 0; j < nombre.length; j++) {
+                        out.print(nombre[j]);
+                    }
+                    out.println("</td>");
+                    cont += 40;
+                    char apellido [] = this.mae.leerChars(cont);
+                    out.print("<td>");
+                    for (int j = 0; j < nombre.length; j++) {
+                        out.print(apellido[j]);
+                    }
+                    out.println("</td>");
+                    cont += 40;
+                    out.println("<td>"+this.mae.leerEntero(cont)+"</td>");
+                    cont += 4;
+                    out.println("</tr>");
+                }
+            }
+            
+            out.println("</table>");
             out.println("</body>");
             out.println("</html>");
         }

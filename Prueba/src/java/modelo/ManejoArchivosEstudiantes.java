@@ -22,7 +22,7 @@ public class ManejoArchivosEstudiantes {
     private long finalPosT;
     
     private ManejoArchivosEstudiantes() throws FileNotFoundException, IOException{
-        this.raf = new RandomAccessFile("estudiante2.txt", "rw"); //Maneja el archivo profesor.txt
+        this.raf = new RandomAccessFile("prueebita3.txt", "rw"); //Maneja el archivo profesor.txt
         this.raf.seek(8);
         System.out.println("HOLA " + this.raf.getFilePointer());
         
@@ -42,7 +42,7 @@ public class ManejoArchivosEstudiantes {
             }
         }
         
-        this.rafTree = new RandomAccessFile("estudiante2.txt", "rw");//Maneja el árbol en el archivo profesor.txt
+        this.rafTree = new RandomAccessFile("prueebita3.txt", "rw");//Maneja el árbol en el archivo profesor.txt
         
     }
     
@@ -187,7 +187,9 @@ public class ManejoArchivosEstudiantes {
     }
     
     public long buscarEstudiante(int id) throws IOException{
-        for (int i = 0; i < 280; i+=28) {
+        System.out.println("entró");
+        System.out.println("finalPosT: "+finalPosT);
+        for (int i = 12; i < finalPosT; i+=28) {
             this.rafTree.seek(i);
             if (this.rafTree.readInt() == id) {
                 this.rafTree.skipBytes(16);

@@ -23,7 +23,7 @@ public class ManejoArchivos {
     private static ManejoArchivos manejoArchivos;
 
     private ManejoArchivos() throws FileNotFoundException, IOException {
-        this.raf = new RandomAccessFile("prueba.txt", "rw"); //Maneja el archivo profesor.txt
+        this.raf = new RandomAccessFile("prueebita1.txt", "rw"); //Maneja el archivo profesor.txt
         this.raf.seek(8);
 
         try {
@@ -42,7 +42,7 @@ public class ManejoArchivos {
             }
         }
 
-        this.rafTree = new RandomAccessFile("prueba.txt", "rw");//Maneja el árbol en el archivo profesor.txt
+        this.rafTree = new RandomAccessFile("prueebita1.txt", "rw");//Maneja el árbol en el archivo profesor.txt
         this.df = new DataFactory();
     }
     
@@ -188,7 +188,7 @@ public class ManejoArchivos {
     }
     
     public long buscarProfesor(int id) throws IOException{
-        for (int i = 0; i < 280; i = i + 28) {
+        for (int i = 12; i < finalPosA; i = i + 28) {
             this.rafTree.seek(i);
             if (this.rafTree.readInt() == id) {
                 System.out.println("entro en buscar");
@@ -204,7 +204,7 @@ public class ManejoArchivos {
     public void buscar(int id) throws IOException{
         //int idReal = (65536*(id-1))+131071;
         //System.out.println("idR: "+idReal);
-        for (int i = 0; i < 280; i = i + 28) {
+        for (int i = 12; i < finalPosA; i = i + 28) {
             System.out.println("asdfadfvg");
             this.rafTree.seek(i);
             System.out.println(this.rafTree.readInt());

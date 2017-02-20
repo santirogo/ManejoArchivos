@@ -13,10 +13,6 @@
         <servlet-class>controlador.ServletLista</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletBuscar</servlet-name>
-        <servlet-class>controlador.ServletBuscar</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ServletCusos</servlet-name>
         <servlet-class>controlador.ServletCusos</servlet-class>
     </servlet>
@@ -44,6 +40,22 @@
         <servlet-name>ServletPunto6</servlet-name>
         <servlet-class>controlador.ServletPunto6</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletPunto9</servlet-name>
+        <servlet-class>controlador.ServletPunto9</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletPunto8</servlet-name>
+        <servlet-class>controlador.ServletPunto8</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletPunto5</servlet-name>
+        <servlet-class>controlador.ServletPunto5</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletIns</servlet-name>
+        <servlet-class>controlador.ServletIns</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
@@ -55,10 +67,6 @@
     <servlet-mapping>
         <servlet-name>ServletLista</servlet-name>
         <url-pattern>/ServletLista</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletBuscar</servlet-name>
-        <url-pattern>/ServletBuscar</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletCusos</servlet-name>
@@ -87,6 +95,22 @@
     <servlet-mapping>
         <servlet-name>ServletPunto6</servlet-name>
         <url-pattern>/ServletPunto6</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPunto9</servlet-name>
+        <url-pattern>/ServletPunto9</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPunto8</servlet-name>
+        <url-pattern>/ServletPunto8</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPunto5</servlet-name>
+        <url-pattern>/ServletPunto5</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletIns</servlet-name>
+        <url-pattern>/ServletIns</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

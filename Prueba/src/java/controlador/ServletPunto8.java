@@ -19,10 +19,9 @@ import modelo.ManejoArchivosInscripciones;
  *
  * @author ayoro
  */
-public class ServletInscripciones extends HttpServlet {
-    private ManejoArchivosEstudiantes mae;
-    private ManejoArchivosCursos mac;
-    private ManejoArchivosInscripciones mai;
+public class ServletPunto8 extends HttpServlet {
+    ManejoArchivosInscripciones mai;
+    ManejoArchivosEstudiantes mae;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,25 +35,47 @@ public class ServletInscripciones extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            this.mac = ManejoArchivosCursos.getManejoArchivosCursos();
-            this.mae = ManejoArchivosEstudiantes.getManejoArchivosEstudiantes();
             this.mai = ManejoArchivosInscripciones.getManejoArchivosInscripciones();
+            this.mae = ManejoArchivosEstudiantes.getManejoArchivosEstudiantes();
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
             /* TODO output your page here. You may use following sample code. */
-            int idEst = Integer.parseInt(request.getParameter("idEst"));
-            int idCurso = Integer.parseInt(request.getParameter("idCurso"));
-            String fechaIns = request.getParameter("fechaIns");
-            String fechaFin = request.getParameter("fechaFin");
-            double nota = Double.parseDouble(request.getParameter("nota"));
-            
-            this.mai.crearArchivoInscripciones(idEst, idCurso, fechaIns, fechaFin, nota);
-            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ServletInscripciones</title>");            
+            out.println("<title>Servlet ServletPunto8</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Se realizó la inscripción correctamente</h1>");
+            out.println("<h1>Número de estudiantes inscritos por curso</h1>");
+            int estudiantes [] = this.mai.buscarEstudiante(codigo);
+            out.println("<table>");
+            
+            out.println("<tr>");
+            out.println("<td>ID</td>");
+            out.println("<td>Nombre</td>");
+            out.println("<td>Apellido</td>");
+            out.println("<td>Telefono</td>");
+            out.println("</tr>");
+            
+            for (int i = 0; i < estudiantes.length; i++) {
+                long pos = this.mae.buscarEstudiante(estudiantes[i]);
+                out.println("<tr>");
+                out.println("<td>"+this.mae.leerEntero(pos)+"</td>");
+                out.print("<td>");
+                char name [] = this.mae.leerChars(pos+4);
+                for (int j = 0; j < 20; j++) {
+                    out.print(name[j]);
+                }
+                out.println("</td>");
+                char lastname [] = this.mae.leerChars(pos+44);
+                for (int j = 0; j < 20; j++) {
+                    out.print(lastname[j]);
+                }
+                out.println("</td>");
+                out.println("<td>"+this.mae.leerEntero(pos+84)+"</td>");
+                out.println("</tr>");
+            }
+            
+            out.println("</table>");
             out.println("</body>");
             out.println("</html>");
         }
