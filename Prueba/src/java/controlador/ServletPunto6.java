@@ -1,10 +1,9 @@
-package controlador;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,11 +11,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.BaseDatosEstudiantes;
-import modelo.ManejoArchivosEstudiantes;
 
-public class ServletEstudiante extends HttpServlet {
-    private ManejoArchivosEstudiantes mae;
+/**
+ *
+ * @author ayoro
+ */
+public class ServletPunto6 extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -26,34 +27,18 @@ public class ServletEstudiante extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    private BaseDatosEstudiantes bd = new BaseDatosEstudiantes();
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            this.mae = ManejoArchivosEstudiantes.getManejoArchivosEstudiantes();
-            
             /* TODO output your page here. You may use following sample code. */
-            int id = Integer.parseInt(request.getParameter("id"));
-            String name = request.getParameter("nombre");
-            String surname = request.getParameter("apellido");
-            int telefono = Integer.parseInt(request.getParameter("tel"));
-            
-            this.mae.crearArchivoEstudiante(id, name, surname, telefono);
-            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Servlet</title>");            
+            out.println("<title>Servlet ServletPunto6</title>");            
             out.println("</head>");
             out.println("<body>");
-            
-            for (int i = 0; i < bd.getNombresEstudiantes().size(); i++) {
-                out.println("<h1>Se ha agregado a " + name +" "+ bd.getApellidosEstudiantes().get(i) + " " + surname +" con ID "+ id +" y teléfono "+ telefono +"</h1>");
-            }
-            
+            out.println("<h1>Servlet ServletPunto6 at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

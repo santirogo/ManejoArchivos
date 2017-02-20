@@ -12,6 +12,38 @@
         <servlet-name>ServletLista</servlet-name>
         <servlet-class>controlador.ServletLista</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletBuscar</servlet-name>
+        <servlet-class>controlador.ServletBuscar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletCusos</servlet-name>
+        <servlet-class>controlador.ServletCusos</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletInscripciones</servlet-name>
+        <servlet-class>controlador.ServletInscripciones</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletPunto7</servlet-name>
+        <servlet-class>controlador.ServletPunto7</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletPunto1</servlet-name>
+        <servlet-class>controlador.ServletPunto1</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletPunto2</servlet-name>
+        <servlet-class>controlador.ServletPunto2</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletPunto3</servlet-name>
+        <servlet-class>controlador.ServletPunto3</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletPunto6</servlet-name>
+        <servlet-class>controlador.ServletPunto6</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
@@ -23,6 +55,38 @@
     <servlet-mapping>
         <servlet-name>ServletLista</servlet-name>
         <url-pattern>/ServletLista</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletBuscar</servlet-name>
+        <url-pattern>/ServletBuscar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletCusos</servlet-name>
+        <url-pattern>/ServletCusos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletInscripciones</servlet-name>
+        <url-pattern>/ServletInscripciones</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPunto7</servlet-name>
+        <url-pattern>/ServletPunto7</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPunto1</servlet-name>
+        <url-pattern>/ServletPunto1</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPunto2</servlet-name>
+        <url-pattern>/ServletPunto2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPunto3</servlet-name>
+        <url-pattern>/ServletPunto3</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletPunto6</servlet-name>
+        <url-pattern>/ServletPunto6</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

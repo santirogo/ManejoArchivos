@@ -12,11 +12,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.BaseDatosEstudiantes;
-import modelo.ManejoArchivosEstudiantes;
+import modelo.ManejoArchivos;
 
-public class ServletEstudiante extends HttpServlet {
-    private ManejoArchivosEstudiantes mae;
+/**
+ *
+ * @author ayoro
+ */
+public class ServletBuscar extends HttpServlet {
+    private ManejoArchivos ma;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -26,34 +29,37 @@ public class ServletEstudiante extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    private BaseDatosEstudiantes bd = new BaseDatosEstudiantes();
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            this.mae = ManejoArchivosEstudiantes.getManejoArchivosEstudiantes();
+            ma = ManejoArchivos.getManejoArchivos();
+            int idBus = Integer.parseInt(request.getParameter("idBusqueda"));
+            long posBusqueda = ma.buscarProfesor(idBus);
+            int id = ma.leerEntero(posBusqueda);
+            char nombre [] = ma.leerChars(posBusqueda+4);
+            char apellido [] = ma.leerChars(posBusqueda+44);
+            int ext = ma.leerEntero(posBusqueda+84);
             
             /* TODO output your page here. You may use following sample code. */
-            int id = Integer.parseInt(request.getParameter("id"));
-            String name = request.getParameter("nombre");
-            String surname = request.getParameter("apellido");
-            int telefono = Integer.parseInt(request.getParameter("tel"));
-            
-            this.mae.crearArchivoEstudiante(id, name, surname, telefono);
-            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Servlet</title>");            
+            out.println("<title>Servlet ServletBuscar</title>");            
             out.println("</head>");
             out.println("<body>");
-            
-            for (int i = 0; i < bd.getNombresEstudiantes().size(); i++) {
-                out.println("<h1>Se ha agregado a " + name +" "+ bd.getApellidosEstudiantes().get(i) + " " + surname +" con ID "+ id +" y teléfono "+ telefono +"</h1>");
+            out.println("<h1>ID: "+id+"</h1>");
+            out.print("<h1>Nombre: </h1>");
+            for (int i = 0; i < 20; i++) {
+                out.print(nombre[i]);
             }
-            
+            out.println();
+            out.print("Apellido: ");
+            for (int i = 0; i < 20; i++) {
+                out.print(apellido[i]);
+            }
+            out.println();
+            out.println("Extensión: "+ext);
             out.println("</body>");
             out.println("</html>");
         }

@@ -52,7 +52,7 @@ public class ServletProfesor extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             for (int i = 0; i < bd.getNombresProfesor().size(); i++) {
-                out.println("<h1>Se ha agregado a " + bd.getNombresProfesor().get(i) +" "+ bd.getApellidosProfesor().get(i) + " con Id: "+bd.getId().get(i)+" y extension "+bd.getExt().get(i)+"</h1>");
+                out.println("<h1>Se ha agregado a " + name +" "+ lastname + " con Id: "+id+" y extension "+ext+"</h1>");
             }
             out.println("</body>");
             out.println("</html>");
